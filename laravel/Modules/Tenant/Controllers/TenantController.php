@@ -16,8 +16,7 @@ class TenantController extends Controller
 {
     public function __construct(
         private readonly TenantService $tenantService,
-    ) {
-    }
+    ) {}
 
     /**
      * Create (onboard) a new tenant.

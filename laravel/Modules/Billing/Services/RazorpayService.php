@@ -20,8 +20,7 @@ class RazorpayService
 
     public function __construct(
         private readonly ?Api $apiOverride = null,
-    ) {
-    }
+    ) {}
 
     /**
      * Create a Razorpay subscription for the tenant and persist a local record.

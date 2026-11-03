@@ -16,8 +16,7 @@ class AuthService
 {
     public function __construct(
         private readonly TenantService $tenantService,
-    ) {
-    }
+    ) {}
 
     /**
      * Register a user, provision their tenant, assign Admin, and return a Sanctum token.

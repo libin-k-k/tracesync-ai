@@ -1,5 +1,11 @@
 <?php
 
+use App\Models\User;
+use Libinkk\Permission\Permissions\Permission;
+use Libinkk\Permission\Roles\Role;
+use Libinkk\Permission\Scopes\Scope;
+use Libinkk\Permission\Scopes\Tenant;
+
 return [
 
     'enabled' => true,
@@ -7,11 +13,11 @@ return [
     'default_guard' => 'web',
 
     'models' => [
-        'user' => env('AUTH_MODEL', App\Models\User::class),
-        'role' => Libinkk\Permission\Roles\Role::class,
-        'permission' => Libinkk\Permission\Permissions\Permission::class,
-        'scope' => Libinkk\Permission\Scopes\Scope::class,
-        'tenant' => Libinkk\Permission\Scopes\Tenant::class,
+        'user' => env('AUTH_MODEL', User::class),
+        'role' => Role::class,
+        'permission' => Permission::class,
+        'scope' => Scope::class,
+        'tenant' => Tenant::class,
     ],
 
     'table_names' => [

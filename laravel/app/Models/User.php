@@ -38,6 +38,7 @@ class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
     use HasApiTokens;
+
     use HasAuthorization;
     use HasFactory;
     use HasOneAuth;

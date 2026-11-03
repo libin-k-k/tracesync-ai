@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\OneAuth;
 
 use Illuminate\Support\Facades\Auth;
+use Laravel\Sanctum\HasApiTokens;
 use Libinkk\OneAuth\Contracts\AuthenticationDriverInterface;
 use Libinkk\OneAuth\Exceptions\AuthenticationException;
 use Libinkk\OneAuth\Exceptions\OneAuthException;
@@ -100,7 +101,7 @@ class SanctumDriver implements AuthenticationDriverInterface
 
     private function sanctumAvailable(): bool
     {
-        return trait_exists(\Laravel\Sanctum\HasApiTokens::class)
-            || class_exists(\Laravel\Sanctum\HasApiTokens::class);
+        return trait_exists(HasApiTokens::class)
+            || class_exists(HasApiTokens::class);
     }
 }

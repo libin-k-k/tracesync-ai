@@ -29,7 +29,7 @@ class RazorpayServiceTest extends TestCase
         $payload = '{"event":"subscription.charged"}';
         $signature = hash_hmac('sha256', $payload, $secret);
 
-        $service = new RazorpayService();
+        $service = new RazorpayService;
 
         $this->assertTrue($service->verifyPaymentSignature([
             'payload' => $payload,
@@ -46,7 +46,7 @@ class RazorpayServiceTest extends TestCase
             'billing.config.razorpay.webhook_secret' => 'whsec_test_secret',
         ]);
 
-        $service = new RazorpayService();
+        $service = new RazorpayService;
 
         $this->assertFalse($service->verifyPaymentSignature([
             'payload' => '{"event":"subscription.charged"}',
@@ -64,7 +64,7 @@ class RazorpayServiceTest extends TestCase
             'status' => SubscriptionStatus::Created,
         ]);
 
-        $service = new RazorpayService();
+        $service = new RazorpayService;
 
         $updated = $service->handleWebhookPayload([
             'event' => 'subscription.halted',

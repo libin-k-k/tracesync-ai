@@ -1,9 +1,11 @@
 <?php
 
+use App\Models\User;
+
 return [
     'driver' => env('ONEAUTH_DRIVER', 'sanctum'),
 
-    'user_model' => env('ONEAUTH_USER_MODEL', \App\Models\User::class),
+    'user_model' => env('ONEAUTH_USER_MODEL', User::class),
 
     'identifier_fields' => ['email'],
 

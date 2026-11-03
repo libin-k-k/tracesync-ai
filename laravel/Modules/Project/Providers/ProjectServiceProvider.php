@@ -8,26 +8,24 @@ use Illuminate\Support\ServiceProvider;
 
 class ProjectServiceProvider extends ServiceProvider
 {
-    public function register(): void
-    {
-    }
+    public function register(): void {}
 
     public function boot(): void
     {
-        $this->loadRoutesFrom(__DIR__ . '/../Routes/web.php');
+        $this->loadRoutesFrom(__DIR__.'/../Routes/web.php');
 
-        if (file_exists(__DIR__ . '/../Routes/api.php')) {
-            $this->loadRoutesFrom(__DIR__ . '/../Routes/api.php');
+        if (file_exists(__DIR__.'/../Routes/api.php')) {
+            $this->loadRoutesFrom(__DIR__.'/../Routes/api.php');
         }
 
-        $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
-        $this->loadViewsFrom(__DIR__ . '/../Views', 'project');
-        $this->loadTranslationsFrom(__DIR__ . '/../Lang', 'project');
+        $this->loadMigrationsFrom(__DIR__.'/../Database/Migrations');
+        $this->loadViewsFrom(__DIR__.'/../Views', 'project');
+        $this->loadTranslationsFrom(__DIR__.'/../Lang', 'project');
 
-        $configPath = __DIR__ . '/../Config';
+        $configPath = __DIR__.'/../Config';
         if (is_dir($configPath)) {
-            foreach (glob($configPath . '/*.php') ?: [] as $configFile) {
-                $this->mergeConfigFrom($configFile, 'project.' . basename($configFile, '.php'));
+            foreach (glob($configPath.'/*.php') ?: [] as $configFile) {
+                $this->mergeConfigFrom($configFile, 'project.'.basename($configFile, '.php'));
             }
         }
     }

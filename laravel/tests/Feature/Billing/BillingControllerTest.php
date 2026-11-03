@@ -6,6 +6,7 @@ namespace Tests\Feature\Billing;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Carbon;
 use Laravel\Sanctum\Sanctum;
 use Mockery;
 use Mockery\MockInterface;
@@ -266,8 +267,8 @@ class BillingControllerTest extends TestCase
             })
             ->andReturnUsing(function () use ($subscription, $termStart, $termEnd): Subscription {
                 $subscription->status = SubscriptionStatus::Active;
-                $subscription->current_term_start = \Illuminate\Support\Carbon::createFromTimestamp($termStart);
-                $subscription->current_term_end = \Illuminate\Support\Carbon::createFromTimestamp($termEnd);
+                $subscription->current_term_start = Carbon::createFromTimestamp($termStart);
+                $subscription->current_term_end = Carbon::createFromTimestamp($termEnd);
                 $subscription->save();
 
                 return $subscription->fresh();

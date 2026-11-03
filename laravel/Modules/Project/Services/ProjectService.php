@@ -68,7 +68,7 @@ class ProjectService
         return DB::transaction(function () use ($data): Project {
             $tenant = Tenant::query()->findOrFail($data['tenant_id']);
 
-            $project = new Project();
+            $project = new Project;
             $project->tenant_id = $tenant->id;
             $project->name = $data['name'];
             $project->framework_type = $data['framework_type'];

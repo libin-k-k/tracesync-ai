@@ -14,6 +14,5 @@ final class RoleChange
     public function __construct(
         public readonly User $member,
         public readonly string $role,
-    ) {
-    }
+    ) {}
 }

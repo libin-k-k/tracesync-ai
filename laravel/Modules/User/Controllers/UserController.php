@@ -22,8 +22,7 @@ class UserController extends Controller
 {
     public function __construct(
         private readonly UserManagementService $members,
-    ) {
-    }
+    ) {}
 
     public function index(Request $request): JsonResponse
     {

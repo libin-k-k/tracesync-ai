@@ -17,6 +17,5 @@ final class ProjectGrant
         public readonly Project $project,
         public readonly ?Team $team = null,
         public readonly ?User $developer = null,
-    ) {
-    }
+    ) {}
 }

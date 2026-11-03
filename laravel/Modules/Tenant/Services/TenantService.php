@@ -32,7 +32,7 @@ class TenantService
     public function create(array $data): Tenant
     {
         $tenant = DB::transaction(function () use ($data): Tenant {
-            $tenant = new Tenant();
+            $tenant = new Tenant;
             $tenant->name = $data['name'];
             $tenant->api_key = $this->generateUniqueApiKey();
             $tenant->subscription_plan = $this->resolveSubscriptionPlan(

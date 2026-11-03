@@ -12,7 +12,7 @@ class BillingServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(RazorpayService::class, function (): RazorpayService {
-            return new RazorpayService();
+            return new RazorpayService;
         });
     }
 

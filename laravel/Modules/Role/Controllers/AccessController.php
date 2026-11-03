@@ -16,8 +16,7 @@ class AccessController extends Controller
 {
     public function __construct(
         private readonly RoleAdminService $roles,
-    ) {
-    }
+    ) {}
 
     public function me(Request $request): JsonResponse
     {

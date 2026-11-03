@@ -13,7 +13,43 @@ concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  NODE_VERSION: "22"
+  PHP_VERSION: "8.4"
+
 jobs:
+  laravel-pint:
+    name: Laravel Pint
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: laravel
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          coverage: none
+          tools: composer:v2
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: laravel/vendor
+          key: composer-${{ runner.os }}-${{ hashFiles('laravel/composer.lock') }}
+          restore-keys: |
+            composer-${{ runner.os }}-
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: Run Pint
+        run: vendor/bin/pint --test
+
   laravel-tests:
     name: Laravel tests
     runs-on: ubuntu-latest
@@ -28,9 +64,9 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: "8.4"
+          php-version: ${{ env.PHP_VERSION }}
           extensions: mbstring, pdo_sqlite, sqlite3, bcmath, ctype, fileinfo, openssl, tokenizer, xml, curl, zip
-          coverage: none
+          coverage: pcov
           tools: composer:v2
 
       - name: Cache Composer dependencies
@@ -49,11 +85,91 @@ jobs:
           cp .env.example .env
           php artisan key:generate --force
 
-      - name: Run PHPUnit tests
-        run: php artisan test
+      - name: Run PHPUnit tests with coverage
+        run: |
+          mkdir -p coverage
+          vendor/bin/phpunit --coverage-clover=coverage/clover.xml
 
-  nestjs-tests:
-    name: NestJS tests
+      - name: Upload Laravel coverage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: laravel-coverage
+          path: laravel/coverage/clover.xml
+          if-no-files-found: ignore
+
+  laravel-migrations:
+    name: Laravel migrations
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: laravel
+
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_ROOT_PASSWORD: secret
+          MYSQL_DATABASE: tracesync
+          MYSQL_USER: tracesync
+          MYSQL_PASSWORD: secret
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -psecret"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          extensions: mbstring, pdo_mysql, mysql, bcmath, ctype, fileinfo, openssl, tokenizer, xml, curl, zip
+          coverage: none
+          tools: composer:v2
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: laravel/vendor
+          key: composer-${{ runner.os }}-${{ hashFiles('laravel/composer.lock') }}
+          restore-keys: |
+            composer-${{ runner.os }}-
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: Prepare application
+        run: |
+          cp .env.example .env
+          php artisan key:generate --force
+          {
+            echo "DB_CONNECTION=mysql"
+            echo "DB_HOST=127.0.0.1"
+            echo "DB_PORT=3306"
+            echo "DB_DATABASE=tracesync"
+            echo "DB_USERNAME=tracesync"
+            echo "DB_PASSWORD=secret"
+          } >> .env
+
+      - name: Run migrations
+        run: php artisan migrate --force
+
+      - name: Re-run migrations on fresh schema
+        run: php artisan migrate:fresh --force
+
+      - name: Rollback and migrate again
+        run: |
+          php artisan migrate:rollback --force
+          php artisan migrate --force
+
+  nestjs-lint:
+    name: NestJS lint
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -66,15 +182,111 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "22"
+          node-version: ${{ env.NODE_VERSION }}
           cache: npm
           cache-dependency-path: nestjs/package-lock.json
 
       - name: Install npm dependencies
         run: npm ci
 
-      - name: Run Jest unit tests
-        run: npm test
+      - name: Run Oxlint
+        run: npm run lint -- --deny-warnings
+
+  nestjs-tests:
+    name: NestJS unit tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: nestjs
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: nestjs/package-lock.json
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Run Jest unit tests with coverage
+        run: npm run test:cov
+
+      - name: Upload NestJS coverage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nestjs-coverage
+          path: nestjs/coverage
+          if-no-files-found: ignore
+
+  nestjs-integration:
+    name: NestJS integration tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: nestjs
+
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_ROOT_PASSWORD: secret
+          MYSQL_DATABASE: tracesync
+          MYSQL_USER: tracesync
+          MYSQL_PASSWORD: secret
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -psecret"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd="redis-cli ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: nestjs/package-lock.json
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Prepare environment
+        run: |
+          cp .env.example .env
+          {
+            echo "DB_HOST=127.0.0.1"
+            echo "DB_PORT=3306"
+            echo "DB_DATABASE=tracesync"
+            echo "DB_USERNAME=tracesync"
+            echo "DB_PASSWORD=secret"
+            echo "TYPEORM_SYNC=true"
+            echo "REDIS_HOST=127.0.0.1"
+            echo "REDIS_PORT=6379"
+          } >> .env
+
+      - name: Run e2e integration tests
+        run: npm run test:e2e
 
   react-build:
     name: React build
@@ -90,7 +302,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "22"
+          node-version: ${{ env.NODE_VERSION }}
           cache: npm
           cache-dependency-path: react/package-lock.json
 
@@ -102,3 +314,68 @@ jobs:
 
       - name: Typecheck and build
         run: npm run build
+
+  docker-build:
+    name: Docker build (${{ matrix.service }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - service: laravel
+            context: ./laravel
+          - service: nestjs
+            context: ./nestjs
+          - service: react
+            context: ./react
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build ${{ matrix.service }} image
+        uses: docker/build-push-action@v6
+        with:
+          context: ${{ matrix.context }}
+          push: false
+          tags: tracesync-${{ matrix.service }}:ci
+          cache-from: type=gha,scope=${{ matrix.service }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.service }}
+
+  dependency-audit:
+    name: Dependency vulnerability scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          coverage: none
+          tools: composer:v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Composer audit (Laravel)
+        continue-on-error: true
+        working-directory: laravel
+        run: composer audit --no-interaction
+
+      - name: npm audit (NestJS)
+        continue-on-error: true
+        working-directory: nestjs
+        run: npm audit --audit-level=high
+
+      - name: npm audit (React)
+        continue-on-error: true
+        working-directory: react
+        run: npm audit --audit-level=high

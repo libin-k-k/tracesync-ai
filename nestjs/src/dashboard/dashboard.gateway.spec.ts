@@ -25,17 +25,18 @@ describe('DashboardGateway', () => {
 
   it('should join room_tenant_{id} when tenant_id is provided in handshake query', () => {
     const join = jest.fn();
+    const disconnect = jest.fn();
     const client = {
       id: 'socket-1',
       handshake: { query: { tenant_id: '7' } },
       join,
-      disconnect: jest.fn(),
+      disconnect,
     } as unknown as Socket;
 
     gateway.handleConnection(client);
 
     expect(join).toHaveBeenCalledWith(tenantRoomName(7));
-    expect(client.disconnect).not.toHaveBeenCalled();
+    expect(disconnect).not.toHaveBeenCalled();
   });
 
   it('should disconnect clients that omit tenant_id', () => {

@@ -21,8 +21,7 @@ class PermissionController extends Controller
 {
     public function __construct(
         private readonly RoleAdminService $roles,
-    ) {
-    }
+    ) {}
 
     public function index(Request $request): JsonResponse
     {

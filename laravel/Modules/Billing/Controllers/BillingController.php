@@ -21,8 +21,7 @@ class BillingController extends Controller
 {
     public function __construct(
         private readonly RazorpayService $razorpayService,
-    ) {
-    }
+    ) {}
 
     /**
      * Start a Razorpay subscription for the authenticated user's tenant.

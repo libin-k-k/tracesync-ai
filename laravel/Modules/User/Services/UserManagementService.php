@@ -6,6 +6,7 @@ namespace Modules\User\Services;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Modules\Project\Models\Project;
 use Modules\Tenant\Models\Tenant;
@@ -350,7 +351,7 @@ class UserManagementService
     }
 
     /**
-     * @param  \Illuminate\Support\Collection<int, User>  $members
+     * @param  Collection<int, User>  $members
      * @return list<array<string, mixed>>
      */
     private function teamsFor(User $actor, Tenant $tenant, $members): array

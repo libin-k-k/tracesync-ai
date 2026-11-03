@@ -4,6 +4,10 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
+use Libinkk\ApiStarter\Http\Middleware\AssignRequestId;
+use Libinkk\ApiStarter\Http\Middleware\MeasurePerformance;
+use Libinkk\ApiStarter\Http\Middleware\SetApiVersion;
+use Libinkk\ApiStarter\Http\Middleware\SetLocale;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -13,13 +17,13 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->prependToGroup('api', [
-            \Libinkk\ApiStarter\Http\Middleware\MeasurePerformance::class,
+            MeasurePerformance::class,
         ]);
 
         $middleware->appendToGroup('api', [
-            \Libinkk\ApiStarter\Http\Middleware\AssignRequestId::class,
-            \Libinkk\ApiStarter\Http\Middleware\SetLocale::class,
-            \Libinkk\ApiStarter\Http\Middleware\SetApiVersion::class,
+            AssignRequestId::class,
+            SetLocale::class,
+            SetApiVersion::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
