@@ -1,0 +1,345 @@
+/*
+ * TraceSync AI - Responsive rules
+ * Colors: use var(--*) from color.css only.
+ */
+
+/* Tablet and below */
+@media (max-width: 64rem) {
+  .layout-span-8,
+  .layout-span-6,
+  .layout-span-4,
+  .layout-span-3 {
+    grid-column: span 12;
+  }
+
+  .heading-display {
+    font-size: 2rem;
+  }
+
+  .stat-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .landing-nav-links {
+    display: none;
+  }
+
+  .landing-logo-strip {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .landing-hero-stage-body {
+    grid-template-columns: 1fr;
+  }
+
+  .landing-hero-fix {
+    border-left: none;
+    border-top: 1px solid var(--color-glass-border);
+  }
+
+  .landing-feature-row {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .landing-steps {
+    grid-template-columns: 1fr;
+  }
+
+  .landing-feed-row {
+    grid-template-columns: 5.5rem 1fr;
+    grid-template-areas:
+      "severity time"
+      "service service"
+      "message message";
+  }
+
+  .landing-severity {
+    grid-area: severity;
+  }
+
+  .landing-feed-time {
+    grid-area: time;
+  }
+
+  .landing-feed-service {
+    grid-area: service;
+  }
+
+  .landing-feed-message {
+    grid-area: message;
+  }
+
+  .landing-section-title {
+    font-size: 1.75rem;
+  }
+}
+
+/* Mobile */
+@media (max-width: 40rem) {
+  :root {
+    --layout-gutter: 1rem;
+    --landing-header-offset: 4rem;
+  }
+
+  .layout-grid {
+    gap: 0.75rem;
+  }
+
+  .app-header {
+    padding-block: 0.75rem;
+  }
+
+  .app-main {
+    padding: 1.25rem 0 2rem;
+  }
+
+  .hero-panel {
+    padding: 1.25rem;
+    border-radius: 1rem;
+  }
+
+  .heading-display {
+    font-size: 1.75rem;
+  }
+
+  .stat-row {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
+  }
+
+  .landing-hero {
+    min-height: auto;
+    padding: 1.75rem 0 0;
+  }
+
+  .landing-brand-mark {
+    font-size: 2.25rem;
+  }
+
+  .landing-hero-title {
+    max-width: none;
+  }
+
+  .landing-hero-stage-inner {
+    padding-bottom: 1.5rem;
+  }
+
+  .landing-cta {
+    padding: 1.75rem 0;
+  }
+
+  .landing-section {
+    padding: 2.5rem 0;
+  }
+
+  .landing-section-tight {
+    padding: 1.75rem 0;
+  }
+
+  .landing-logo-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .landing-nav-actions .btn-ghost {
+    display: none;
+  }
+
+  .landing-cta {
+    padding: 1.75rem 0;
+  }
+
+  .landing-footer-bottom {
+    flex-direction: column;
+  }
+}
+
+/* Large desktops */
+@media (min-width: 80rem) {
+  .heading-display {
+    font-size: 3.25rem;
+  }
+
+  .hero-panel {
+    padding: 2.5rem;
+  }
+
+  .landing-section-title {
+    font-size: 2.25rem;
+  }
+}
+
+@media (max-width: 64rem) {
+  .auth-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .auth-brand-panel {
+    display: none;
+  }
+
+  .dash-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .dash-sidebar {
+    position: relative;
+    height: auto;
+    border-right: 0;
+    border-bottom: 1px solid var(--color-glass-border);
+  }
+
+  .dash-sidebar-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .dash-sidebar-footer {
+    display: none;
+  }
+
+  .dash-topbar {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 1rem 1.25rem;
+  }
+
+  .dash-topbar-meta {
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .kpi-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .dash-grid-charts,
+  .dash-grid-bottom {
+    grid-template-columns: 1fr;
+  }
+
+  .dash-donut-body {
+    grid-template-columns: minmax(9rem, 10.5rem) minmax(0, 1fr);
+  }
+
+  .dash-inline-callout {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .live-feed-header,
+  .projects-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .settings-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .docs-shell {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .docs-toc {
+    position: static;
+  }
+
+  .docs-toc-list {
+    flex-direction: row;
+    gap: 0.35rem 1rem;
+    overflow-x: auto;
+    padding-bottom: 0.35rem;
+  }
+
+  .docs-toc-link {
+    white-space: nowrap;
+  }
+
+  .docs-flow,
+  .docs-ports,
+  .member-roles,
+  .team-grid,
+  .team-assign,
+  .role-permission-groups {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 40rem) {
+  .dash-content {
+    padding: 1rem;
+  }
+
+  .dash-page-title {
+    font-size: 1.25rem;
+  }
+
+  .kpi-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .dash-donut-body {
+    grid-template-columns: 1fr;
+  }
+
+  .dash-user-email {
+    max-width: 8rem;
+  }
+
+  .dash-chip-btn span {
+    display: none;
+  }
+
+  .tenant-chip {
+    display: none;
+  }
+
+  .projects-header,
+  .settings-header,
+  .modal-actions,
+  .api-key-actions,
+  .dash-inline-callout-actions,
+  .role-header-actions,
+  .role-row-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .role-tabs {
+    display: flex;
+    width: 100%;
+  }
+
+  .role-tab {
+    flex: 1;
+    text-align: center;
+  }
+
+  .modal-form,
+  .table-skeleton-row {
+    grid-template-columns: 1fr;
+  }
+
+  .docs-title {
+    font-size: 2rem;
+  }
+
+  .docs-heading {
+    font-size: 1.4rem;
+  }
+
+  .docs-code-bar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}

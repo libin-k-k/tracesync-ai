@@ -1,0 +1,15 @@
+{
+    "name": "Role",
+    "description": "Custom role and permission admin CRUD on top of libinkk/permission",
+    "author": "libinkk",
+    "website": "",
+    "license": "MIT",
+    "priority": 25,
+    "version": "1.0.0",
+    "enabled": true,
+    "dependencies": [
+        "User"
+    ],
+    "providers": [],
+    "aliases": []
+}

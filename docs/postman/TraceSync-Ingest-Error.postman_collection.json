@@ -1,0 +1,50 @@
+{
+  "info": {
+    "name": "TraceSync AI - Ingest Error",
+    "description": "POST an error log into the NestJS ingest engine. Set collection variables first.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "nestjs_url",
+      "value": "http://localhost:3030"
+    },
+    {
+      "key": "tenant_api_key",
+      "value": "PASTE_TENANT_API_KEY_HERE"
+    },
+    {
+      "key": "project_id",
+      "value": "1"
+    }
+  ],
+  "item": [
+    {
+      "name": "Ingest error log",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "x-api-key",
+            "value": "{{tenant_api_key}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"project_id\": \"{{project_id}}\",\n  \"error_message\": \"TypeError: Cannot read properties of undefined (reading 'id')\",\n  \"stack_trace\": \"TypeError: Cannot read properties of undefined (reading 'id')\\n    at UserService.findById (user.service.ts:41:18)\\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\",\n  \"environment\": \"production\"\n}"
+        },
+        "url": "{{nestjs_url}}/api/v1/errors",
+        "description": "Queues an error for AI enrichment. Requires NestJS running and Redis key tenant_api_key:{api_key}."
+      },
+      "response": []
+    }
+  ]
+}

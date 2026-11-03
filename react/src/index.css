@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+/*
+ * Map Tailwind theme colors to color.css tokens only.
+ * Do not introduce raw hex/rgb here - reference var(--*).
+ */
+@theme {
+  --color-base: var(--color-bg-base);
+  --color-elevated: var(--color-bg-elevated);
+  --color-muted-surface: var(--color-bg-muted);
+  --color-foreground: var(--color-text-primary);
+  --color-foreground-secondary: var(--color-text-secondary);
+  --color-foreground-muted: var(--color-text-muted);
+  --color-primary: var(--color-accent-primary);
+  --color-primary-hover: var(--color-accent-primary-hover);
+  --color-amber: var(--color-accent-amber);
+  --color-success: var(--color-success);
+  --color-warning: var(--color-warning);
+  --color-danger: var(--color-danger);
+  --color-info: var(--color-info);
+  --color-glass: var(--color-glass-bg);
+  --color-glass-edge: var(--color-glass-border);
+}

@@ -1,0 +1,15 @@
+{
+    "name": "User",
+    "description": "Workspace member management with RBAC and ABAC",
+    "author": "libinkk",
+    "website": "",
+    "license": "MIT",
+    "priority": 30,
+    "version": "1.0.0",
+    "enabled": true,
+    "dependencies": [
+        "Tenant"
+    ],
+    "providers": [],
+    "aliases": []
+}

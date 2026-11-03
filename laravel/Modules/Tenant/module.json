@@ -1,0 +1,13 @@
+{
+    "name": "Tenant",
+    "description": "B2B multi-tenancy control plane - organizations, API keys, subscription plans",
+    "author": "libinkk",
+    "website": "",
+    "license": "MIT",
+    "priority": 10,
+    "version": "1.0.0",
+    "enabled": true,
+    "dependencies": [],
+    "providers": [],
+    "aliases": []
+}

@@ -1,0 +1,15 @@
+{
+    "name": "Project",
+    "description": "Tenant-owned monitored projects / applications",
+    "author": "libinkk",
+    "website": "",
+    "license": "MIT",
+    "priority": 20,
+    "version": "1.0.0",
+    "enabled": true,
+    "dependencies": [
+        "Tenant"
+    ],
+    "providers": [],
+    "aliases": []
+}

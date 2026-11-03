@@ -1,0 +1,51 @@
+# Secrets and local env
+.env
+.env.*
+!.env.example
+!**/.env.example
+
+# Dependencies
+node_modules/
+vendor/
+
+# Builds and caches
+dist/
+build/
+coverage/
+*.tsbuildinfo
+.phpunit.result.cache
+.phpunit.cache/
+laravel/bootstrap/cache/*.php
+!laravel/bootstrap/cache/.gitignore
+laravel/storage/pail
+laravel/public/hot
+laravel/public/storage
+laravel/public/build
+
+# Logs and OS junk
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.DS_Store
+Thumbs.db
+
+# IDE / editor
+.idea/
+.vscode/
+!.vscode/extensions.json
+.zed/
+*.swp
+*.swo
+*~
+
+# Cursor IDE / agent (do not commit or push)
+.cursor/
+
+# Local tooling
+auth.json
+Homestead.json
+Homestead.yaml
+_ide_helper.php
+*.local

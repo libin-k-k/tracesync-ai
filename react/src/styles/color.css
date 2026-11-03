@@ -1,0 +1,120 @@
+/*
+ * TraceSync AI - Color tokens ONLY
+ * All project colors must be defined here as CSS custom properties.
+ * Do not define colors in style.css, responsive.css, animation.css, or React files.
+ */
+
+:root {
+  /* Canvas / surfaces - warm graphite hierarchy (not flat pure black) */
+  --color-bg-base: #09090b;
+  --color-bg-elevated: #111114;
+  --color-bg-muted: #18181c;
+  --color-bg-sunken: #050506;
+  --color-bg-hero-mid: #0c0c0f;
+  --color-bg-hero-end: #09090b;
+  --color-bg-sidebar: #0c0c0f;
+  --color-bg-row-hover: rgba(255, 255, 255, 0.03);
+  --color-bg-row-stripe: rgba(255, 255, 255, 0.015);
+
+  /* Glassmorphism */
+  --color-glass-bg: rgba(17, 17, 20, 0.72);
+  --color-glass-bg-strong: rgba(12, 12, 15, 0.88);
+  --color-glass-border: rgba(255, 255, 255, 0.08);
+  --color-glass-border-strong: rgba(255, 255, 255, 0.14);
+  --color-glass-highlight: rgba(255, 255, 255, 0.05);
+  --color-glass-shadow: rgba(0, 0, 0, 0.5);
+  --color-glass-inset: rgba(255, 255, 255, 0.04);
+
+  /* Text */
+  --color-text-primary: #f4f1eb;
+  --color-text-secondary: #a3a8b5;
+  --color-text-muted: #6d7382;
+  --color-text-inverse: #0b0d12;
+  --color-text-on-accent: #140c05;
+
+  /* Brand accents - burnt orange / amber */
+  --color-accent-primary: #e86a1a;
+  --color-accent-primary-hover: #f07828;
+  --color-accent-primary-active: #c45512;
+  --color-accent-amber: #f5a623;
+  --color-accent-amber-soft: rgba(245, 166, 35, 0.16);
+  --color-accent-orange-soft: rgba(232, 106, 26, 0.18);
+  --color-accent-glow: rgba(232, 106, 26, 0.35);
+
+  /* Semantic */
+  --color-success: #34d399;
+  --color-success-soft: rgba(52, 211, 153, 0.14);
+  --color-warning: #f5a623;
+  --color-warning-soft: rgba(245, 166, 35, 0.14);
+  --color-danger: #f87171;
+  --color-danger-soft: rgba(248, 113, 113, 0.14);
+  --color-info: #38bdf8;
+  --color-info-soft: rgba(56, 189, 248, 0.14);
+
+  /* Skeleton / chrome */
+  --color-skeleton: rgba(255, 255, 255, 0.06);
+  --color-skeleton-shine: rgba(255, 255, 255, 0.12);
+  --color-divider: rgba(255, 255, 255, 0.06);
+  --color-overlay: rgba(5, 5, 6, 0.72);
+
+  /* Landing atmosphere */
+  --color-hero-glow: rgba(232, 106, 26, 0.2);
+  --color-hero-glow-secondary: rgba(245, 166, 35, 0.1);
+
+  /* Focus / rings */
+  --color-focus-ring: rgba(232, 106, 26, 0.55);
+
+  /* Gradients */
+  --color-gradient-hero: linear-gradient(
+    160deg,
+    var(--color-bg-base) 0%,
+    var(--color-bg-hero-mid) 48%,
+    var(--color-bg-hero-end) 100%
+  );
+  --color-gradient-accent: linear-gradient(
+    135deg,
+    var(--color-accent-primary) 0%,
+    var(--color-accent-amber) 100%
+  );
+  --color-gradient-surface: linear-gradient(
+    180deg,
+    var(--color-bg-elevated) 0%,
+    var(--color-bg-base) 100%
+  );
+  --color-gradient-sidebar: linear-gradient(
+    180deg,
+    var(--color-bg-sidebar) 0%,
+    var(--color-bg-sunken) 100%
+  );
+  --color-dash-glow: rgba(232, 106, 26, 0.62);
+  --color-dash-glow-soft: rgba(245, 166, 35, 0.38);
+  --color-dash-card: rgba(16, 14, 12, 0.42);
+  --color-dash-card-sheen: rgba(255, 255, 255, 0.08);
+  --color-dash-card-border: rgba(255, 176, 96, 0.22);
+  --color-dash-card-glow: rgba(232, 106, 26, 0.16);
+  --color-gradient-dash-glow: radial-gradient(
+      ellipse 46% 42% at 6% -8%,
+      var(--color-dash-glow),
+      transparent 62%
+    ),
+    radial-gradient(
+      ellipse 40% 36% at 94% 6%,
+      var(--color-dash-glow-soft),
+      transparent 58%
+    ),
+    radial-gradient(
+      ellipse 34% 30% at 82% 96%,
+      var(--color-dash-glow),
+      transparent 64%
+    ),
+    radial-gradient(
+      ellipse 28% 26% at 2% 92%,
+      var(--color-dash-glow-soft),
+      transparent 68%
+    );
+  --color-chart-high: var(--color-accent-primary-hover);
+  --color-chart-medium: var(--color-accent-amber);
+  --color-chart-low: var(--color-text-muted);
+  --color-diff-add: var(--color-success);
+  --color-diff-del: var(--color-danger);
+}
