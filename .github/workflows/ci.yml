@@ -368,7 +368,7 @@ jobs:
       - name: Composer audit (Laravel)
         continue-on-error: true
         working-directory: laravel
-        run: composer audit --no-interaction
+        run: composer audit --locked --no-interaction
 
       - name: npm audit (NestJS)
         continue-on-error: true
